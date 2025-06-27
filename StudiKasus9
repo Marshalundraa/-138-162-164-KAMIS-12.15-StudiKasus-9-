@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+
+const int MAKS = 100;
+
+class Nilai {
+private:
+    int nim[MAKS];
+    float mkl1[MAKS], mkl2[MAKS], mkl3[MAKS], rata[MAKS];
+    int jumlah;
+
+public:
+    Nilai() {
+        jumlah = 0;
+    }
+
+    void input() {
+        cout << "Masukkan jumlah mahasiswa: ";
+        cin >> jumlah;
+
+        cout << "Masukkan nilai untuk " << jumlah << " siswa (3 mata pelajaran):\n";
+        for (int i = 0; i < jumlah; i++) {
+            cout << "\nSiswa " << i + 1 << ":\n";
+            cout << "NIM: ";
+            cin >> nim[i];
+            cout << "Nilai mapel 1: ";
+            cin >> mkl1[i];
+            cout << "Nilai mapel 2: ";
+            cin >> mkl2[i];
+            cout << "Nilai mapel 3: ";
+            cin >> mkl3[i];
+
+            rata[i] = (mkl1[i] + mkl2[i] + mkl3[i]) / 3;
+        }
+    }
+
+    void tampil() {
+    	cout << "+------------------------------------------+\n";
+        cout << "|No\t|NIM\t| M1\t| M2\t|M3\t|Rata-rata\n";
+        cout << "+------------------------------------------+\n";
+        for (int i = 0; i < jumlah; i++) {
+            cout << "|"<< i + 1 << "\t|" << nim[i] << "\t|" << mkl1[i] << "\t|" << mkl2[i] << "\t|" << mkl3[i] << "\t|" << rata[i] << endl;
+        }
+    }
+
+    void bubbleSort(bool ascending) {
+        for (int i = 0; i < jumlah - 1; i++) {
+            for (int j = 0; j < jumlah - i - 1; j++) {
+                bool kondisi = ascending ? (rata[j] > rata[j + 1]) : (rata[j] < rata[j + 1]);
+                if (kondisi) {
+                    swap(rata[j], rata[j + 1]);
+                    swap(nim[j], nim[j + 1]);
+                    swap(mkl1[j], mkl1[j + 1]);
+                    swap(mkl2[j], mkl2[j + 1]);
+                    swap(mkl3[j], mkl3[j + 1]);
+                }
+            }
+        }
+
+        if (ascending)
+            cout << "\nRata-rata siswa (Ascending):\n ";
+        else
+            cout << "\nRata-rata siswa (Descending):\n ";
+
+        for (int i = 0; i < jumlah; i++) {
+            cout << rata[i] << " | ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    Nilai mhs;
+    int menu;
+
+    do {
+        cout << "\n===== MENU =====\n";
+        cout << "1. Input Nilai Siswa\n";
+        cout << "2. Tampilkan Tabel Nilai dan Rata-rata\n";
+        cout << "3. Sorting Rata-rata (Ascending)\n";
+        cout << "4. Sorting Rata-rata (Descending)\n";
+        cout << "5. Keluar\n";
+        cout << "Pilih menu: ";
+        cin >> menu;
+
+        switch (menu) {
+            case 1: mhs.input(); break;
+            case 2: mhs.tampil(); break;
+            case 3: mhs.bubbleSort(true); break;
+            case 4: mhs.bubbleSort(false); break;
+        }
+
+    } while (menu != 5);
+
+    return 0;
+}
+
